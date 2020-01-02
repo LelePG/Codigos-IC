@@ -1,0 +1,23 @@
+class teste1{
+public static void main (String [] args){
+	a[x]=b;
+b=2;
+x=u;
+
+if(a){
+a=b;}
+else{
+a=c;
+}
+while (a<2){
+x=u+1;
+}
+	}}
+ class classe1{
+int qq;
+boolean q;
+public int metodo (){
+System.out.println(a);
+return 1;
+}
+}

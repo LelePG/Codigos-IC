@@ -1,0 +1,155 @@
+PARSER_BEGIN(MiniJava)
+import java.io.*;
+public class MiniJava {
+
+public static void escreve(String S){
+	System.out.println(S);
+}
+  public static void main(String args[]) throws ParseException,IOException {
+    
+    MiniJava parser = new MiniJava(new FileInputStream(args[0]));
+    parser.MiniJava();
+return;
+  }
+
+}
+
+PARSER_END(MiniJava)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+
+TOKEN :
+{
+  
+ <ACHAVES: "{">
+| <FCHAVES: "}">
+| <APAR: "(">
+| <FPAR: ")">
+| <PV: ";">
+| <CLASS: "class">
+| <EXTEND: "extends">
+|<PUBLIC: "public">
+| <STATIC: "static">
+| <VOID: "void">
+| <MAIN:"main">
+| <STRING: "String">
+| <ACONCH: "[">
+| <FCONCH:"]">
+|<COMMA:",">
+|<RETURN: "return">
+|<INT: "int">
+|<BOOL: "boolean">
+| <IF: "if">
+| <ELSE: "else">
+| <WHILE: "while">
+| <SOUT: "System.out.println">
+| <EQUAL: "=">
+| <TRUE: "true">
+| <FALSE: "false">
+| <THIS: "this">
+| <NEW :" new">
+| <EXCLAM: "!">
+| <AND : "&&">
+| <MENOR: "<">
+| <MAIS: "+">
+| <MENOS: "-">
+| <MULT : "*">
+| <PONTO: ".">
+| <LENGTH: "length">
+}
+
+TOKEN :
+{
+  
+ < IDENTIFIER: (["a"-"z","A"-"Z","0"-"9"])+>
+| < INTEGER_LITERAL: (["a"-"z","A"-"Z"])+(["0"-"9"])+>
+
+}
+
+
+void MiniJava (): {}
+{
+  mainClass() (ClassDeclaration())* <EOF> {escreve("}");}
+}
+
+void mainClass():{String classe,state="",aux;}{
+<CLASS> classe = identifier() <ACHAVES> <PUBLIC> <STATIC> <VOID> <MAIN> <APAR> <STRING> <ACONCH> <FCONCH> identifier() <FPAR>  <ACHAVES>(aux = Statement(){state+=aux;})*<FCHAVES> <FCHAVES>
+{escreve("class " +classe +"{\nmain(void){\n"+state+"\nreturn 0;\n}");return;}
+}
+
+void ClassDeclaration() :{String id="",acumulador="";}
+{
+  <CLASS> id = identifier(){acumulador+="class "+ id ;} (<EXTEND> id = identifier(){acumulador+= " : public " + id;})? {acumulador+="{";}<ACHAVES> (id=VarDeclaration(){acumulador+="\n"+id;})* (id = MethodDeclaration(){acumulador+="\n" +id;})* <FCHAVES>{acumulador+="\n}"; escreve(acumulador);}
+}
+
+String VarDeclaration():{String tipo,id;}
+{
+tipo = type() id = identifier() <PV> {return tipo +" " +id +";";}
+
+}
+
+String MethodDeclaration():{String tipo, id, acumulador = "";}
+{
+<PUBLIC> tipo = type() id=identifier() <APAR>{acumulador+="public:\n" +tipo +" " +id + "(";} (tipo=type() id=identifier(){acumulador+=tipo +id;}(<COMMA> tipo=type() id=identifier(){acumulador+=","+tipo +id;})*)? <FPAR> <ACHAVES> {acumulador += "){\n";}(id=VarDeclaration(){acumulador+=id+"\n";})* (id = Statement(){acumulador+=id+"\n";})* <RETURN> id=Expression() <PV> <FCHAVES>
+{return acumulador+="return "+id +";\n}";}
+}
+
+String type():{String chave = "";}
+{
+ <INT> (<ACONCH> <FCONCH> {chave = "[]";})? {return "int"+chave;}
+|<BOOL> {return "bool";}
+
+}
+String Statement():{String aux = "",aux2="",acumulador="";}
+{
+  <IF> <APAR> aux =ExpressionRecursao() <FPAR> <ACHAVES>aux2=Statement()<FCHAVES>{acumulador+="if (" +aux+"){\n"+aux2+"}\nelse{\n";}<ELSE><ACHAVES> aux=Statement()<FCHAVES>{return acumulador+=aux+"}";}
+| <WHILE> <APAR> aux=ExpressionRecursao() <FPAR><ACHAVES> aux2=Statement()<FCHAVES>{return acumulador+="\nwhile(" + aux + "){\n"+aux2+"}";}
+| <SOUT> <APAR> aux=ExpressionRecursao() <FPAR> <PV> {return acumulador+="count <<( " + aux + " );";}
+| aux=identifier() {acumulador+=aux;} (<EQUAL> aux=ExpressionRecursao() <PV> {return acumulador+="<<" + aux +";\n";}| <ACONCH> aux=ExpressionRecursao() <FCONCH> <EQUAL> aux2=ExpressionRecursao() <PV> {return acumulador+="["+aux+"] << " +aux2+";\n";})
+
+}
+String ExpressionRecursao():{String acumulador = "", acumulador2 ="";}
+{
+acumulador = Expression() (acumulador2=expressaoRecursiva())?
+{return acumulador+acumulador2;}
+}
+
+String Expression():{String guardaExpression = "", id = ""; Token t;}
+{
+<TRUE>{return "TRUE";}
+| <FALSE> {return "FALSE";}
+| id = identifier() {return id;}
+| <THIS> {return "this";}
+| <NEW> (<INT> <ACONCH> guardaExpression = Expression() <FCONCH> {return "["+guardaExpression+"];";}|id= identifier() <APAR> <FPAR>{return id+".init()";}) 
+| <EXCLAM> guardaExpression=Expression() {return "not" + guardaExpression;}
+| <APAR> guardaExpression = Expression() <FPAR> {return guardaExpression;}
+| t = <INTEGER_LITERAL> {return t.image.toString();}
+
+}
+
+String expressaoRecursiva():{String guardaExpression,id,acumulador="";}
+{
+id = selecionaOperador() guardaExpression = Expression(){return id + guardaExpression;}
+| <ACONCH> guardaExpression=Expression() <FCONCH>{return "["+guardaExpression+"]";}
+| <PONTO> (id=identifier() <APAR> (guardaExpression = Expression() {acumulador = "->"+id+"("+guardaExpression;} (<COMMA> guardaExpression=Expression(){acumulador+=","+guardaExpression;})*)? <FPAR>{acumulador+=")";} | <LENGTH>){return "::size";}
+
+}
+String selecionaOperador():{Token t;}
+{
+t = <AND> {return t.image.toString();}
+|t=<MENOR> {return t.image.toString();}
+|t=<MAIS> {return t.image.toString();}
+|t=<MENOS> {return t.image.toString();}
+|t=<MULT>{return t.image.toString();}
+}
+String identifier():{Token id;}
+{
+id =<IDENTIFIER>
+{return id.image.toString();} 
+}

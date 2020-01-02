@@ -1,0 +1,6 @@
+Uma implementação do MINI Java. ﻿Após a execução, o programa escrito no arquivo passado como parâmetro é exibido no terminal, e em tese, deveria estar em C++, mas como eu não sei c++, acho que pelo menos ficou algo parecido. De qualquer jeito, é melhor que nada.
+
+Para executar:﻿
+javacc MiniJava.jj
+javac *.java
+java MiniJava a.txt, sendo a.txt a file onde está guardado o código que quero reconhecer.

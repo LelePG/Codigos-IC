@@ -1,0 +1,12 @@
+Tradutor de uma linguagem inventada para C.
+as variáveis são números e devem ser delacaras como
+var nome <- (num)
+Um análogo ao printf é a função display{}, onde as chaves agem da mesma forma que os parênteses normais do C, e o conteúdo não leva aspas duplas.
+Os operadores relacionais com execção do diferente (representado por !!) são os mesmos.
+Um exemplo de if é:
+(condição:condição verdadeira: condição falsa)
+
+Para executar:
+javacc ﻿Programa.jj
+javac *.java
+java Programa teste.txt, sendo teste.txt o arquivo que contém o código na linguagem inventada.

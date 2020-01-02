@@ -1,0 +1,58 @@
+PARSER_BEGIN(Operacoes)
+import java.io.*;
+public class Operacoes {
+
+  public static void main(String args[]) throws ParseException,IOException {
+     int result = new Operacoes(new java.io.StringReader(args[0])).Operacoes();
+        System.out.println(result);
+   
+  }
+}
+
+PARSER_END(Operacoes)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+
+TOKEN :
+{
+  <INICIO: "Programa">
+| <ACHAV: "{">
+| <FCHAV:"}">
+
+}
+
+TOKEN :
+{
+ < NUM: ["0"-"9"] (["0"-"9"])* > 
+| < ADD: ("+")>
+| <SUB:("-")>
+| <MULT: ("*")>
+|<DIV:("/")>
+
+}
+int Operacoes(): {int total;}
+{
+	total = Opera() <EOF>
+	{return total;}
+}
+
+int Opera():{int acumulador =0, aux;}
+{
+	acumulador = Numero() 
+      ( (<ADD> aux= Numero() {acumulador+=aux;})
+	|(<SUB> aux= Numero() {acumulador-=aux;})
+	|(<DIV> aux= Numero() {acumulador/=aux;})
+	|(<MULT> aux= Numero() {acumulador*=aux;})  )*
+	{return acumulador;}
+}
+
+int Numero(): {Token n;}
+{
+n=<NUM> {return Integer.parseInt(n.image);}
+}

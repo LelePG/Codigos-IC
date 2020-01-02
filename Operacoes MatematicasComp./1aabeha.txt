@@ -1,0 +1,7 @@
+Compilador para operações matemáticas simples (+,-,*,/). As operações são passadas por um arquivo e exibidas no terminal ao final da compilação. Nada mais acontece.
+
+Para executar:
+javacc ﻿Operacoes.jj
+javac *.java
+java Operacoes op.txt, sendo op.txt o arquivo que contém as operações.
+

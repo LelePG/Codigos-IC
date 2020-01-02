@@ -1,0 +1,9 @@
+Interpretador para operações matemáticas simples (+,-,*,/). A prioridade dos operadores não foi implementada.
+A tradução foi feita retornando valores inteiro na gramática e realizando as operações na mesma.
+
+Para executar:
+javacc ﻿Operacoes.jj
+javac *.java
+java Operacoes "operação desejada"
+
+As operações são passadas diretamente como parâmetro, não é necessário um arquivo.

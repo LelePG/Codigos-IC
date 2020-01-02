@@ -1,0 +1,6 @@
+COMEÇA AQUI $
+ *comando();
+ *comadOO();
+ *.02();
+ *.();
+/

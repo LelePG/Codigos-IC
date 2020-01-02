@@ -1,0 +1,110 @@
+PARSER_BEGIN(Programa)
+import java.io.*;
+public class Programa {
+	public static void escreve(String s){
+	System.out.print(s);
+	}
+
+  public static void main(String args[]) throws ParseException,IOException {
+ 	Programa parser = new Programa(new FileInputStream(args[0]));
+	escreve ("int main(){ \n");
+    	parser.Programa();
+	escreve ("return 0;\n}\n");
+   
+  }
+}
+
+PARSER_END(Programa)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+
+TOKEN :
+{
+ 
+ <APAR: "(">
+| <FPAR:")">
+| <VAR: "var">
+| <ATTR: "<-">
+
+}
+
+TOKEN :
+{
+ < NUM: ["0"-"9"] (["0"-"9"])* > 
+|<FUNC: "display">
+| <ID: (["a"-"z", "A"-"Z"])+>
+| < OP: ("+"|"-"|"*"|"/")>
+|<RELACIONAL: (">"|"<"|"="|">="|"<="|"!!")>
+|<ATEXTO:"{">
+|<FTEXTO:"}">
+|<TEXTO:(["a"-"z", "A"-"Z", "0"-"9"]|"_"|".")+>
+|<DP:":">
+
+
+
+}
+void Programa():{}
+{
+	(operacao() | condicional() | funcao())+
+	
+}
+
+void condicional():{Token id1,id2; String op_relacional="",funcao1="",funcao2="";}
+{
+<APAR> id1=<ID> op_relacional = operadorRelacional() id2=<ID> <DP> funcao1=paridadeFuncoes() <DP> funcao2=paridadeFuncoes() <FPAR>
+	{escreve("if("+id1.image.toString()+op_relacional+id2.image.toString()+"){\n"+funcao1+"\n}\nelse if{\n"+funcao2+"\n}\n");}
+}
+String operadorRelacional(): {Token t;}
+{
+	t = <RELACIONAL>
+	{switch (t.image.toString()){
+	case "!!":
+	return "!=";
+	case "=":
+	return "==";
+	default:
+	return t.image.toString();
+	};}
+}
+
+String paridadeFuncoes(): {Token func, texto;String retorno;}
+{
+	func = <FUNC> <ATEXTO> texto=<TEXTO> <FTEXTO>
+	{switch (func.image.toString()){
+		case "display":
+		retorno = "printf";
+		break;
+		default:
+		retorno= func.image.toString();
+		}
+	retorno+="(\""+texto.image.toString()+"\");\n";
+	return retorno;
+	}
+
+}
+void funcao():{String s;}
+{
+	s= paridadeFuncoes()
+	{escreve(s);}
+}
+void operacao(): {Token nome_variavel; String operacao;}
+{
+	<VAR> nome_variavel = <ID> <ATTR> <APAR> operacao=expressao() <FPAR>
+	{escreve( "int "+nome_variavel.image.toString() + " = " + operacao +";\n");} 
+
+}
+
+String expressao():{String acumulador; Token operador, numero,n1;}
+{
+	n1=<NUM> {acumulador = n1.image.toString();} (operador = <OP> numero=<NUM>{acumulador+=operador.image.toString()+numero.image.toString();})*
+	
+	{return acumulador;}
+
+}
+

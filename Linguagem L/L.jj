@@ -1,0 +1,59 @@
+PARSER_BEGIN(L)
+import java.io.*;
+public class L {
+
+  public static void main(String args[]) throws ParseException,IOException {
+    
+    L parser = new L(new FileInputStream(args[0]));
+    parser.L();
+  }
+
+}
+
+PARSER_END(L)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+
+TOKEN :
+{
+  <MAIN: "main">
+| <ACHAVES: "{">
+| <FCHAVES: "}">
+| <APAR: "(">
+| <FPAR: ")">
+| <PV: ";">
+}
+
+TOKEN :
+{
+  
+ < ID: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"])*>
+
+}
+
+
+void L ():
+{}
+{
+  <MAIN> <ACHAVES> seqCmd() <FCHAVES> <EOF>
+}
+
+void seqCmd():
+{}
+{
+  (cmd() <PV> seqCmd())?
+}
+
+void cmd () :
+{}
+{ 
+  <ID> <APAR> <FPAR>
+}
+	
+

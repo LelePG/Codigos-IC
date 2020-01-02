@@ -1,0 +1,60 @@
+PARSER_BEGIN(G)
+import java.io.*;
+public class G {
+
+  public static void main(String args[]) throws ParseException,IOException {
+    
+    G parser = new G(new FileInputStream(args[0]));
+    parser.G();
+  }
+
+}
+
+PARSER_END(G)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+
+TOKEN :
+{
+  <INICIO: "COMEÇA AQUI">
+| <BARRA: "/">
+| <CIF: "$">
+| <APAR: "(">
+| <FPAR: ")">
+| <PV: ";">
+| <ASTERIC: "*">
+}
+
+TOKEN :
+{
+  
+ < ID: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z"])* | "."(["0"-"9"])* >
+
+}
+
+
+void G ():
+{}
+{
+  <INICIO> <CIF> seqCmd() <BARRA> <EOF>
+}
+
+void seqCmd():
+{}
+{
+  (cmd() <PV> seqCmd())?
+}
+
+void cmd () :
+{}
+{ 
+  <ASTERIC> <ID> <APAR> <FPAR>
+}
+	
+

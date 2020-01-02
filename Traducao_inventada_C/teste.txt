@@ -1,0 +1,8 @@
+var a <- (2)
+var b <- (2+1)
+(a>=b:display {o_que_fazer_caso_verdadeiro}:display{o_que_fazer_caso_falso})
+var c <- (2+3+4-6)
+display{ta_funcionando.Eu_acho.}
+var d <- (2*8)
+var e <- (200/12)
+(a!!b:display {true1}:display{false0})

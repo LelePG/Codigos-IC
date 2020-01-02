@@ -1,0 +1,7 @@
+﻿Linguagem simples que reconhece programas do tipo main{}, onde as chaves são preenchidas por comandos seguidos de "();"
+Não acontece nada além do reconhecimento do programa se ele estiver bem escrito.
+
+Para executar:﻿
+javacc L.jj
+javac *.java
+java L programa1.txt, sendo programa1.txt a file onde está guardado o código que quero reconhecer.

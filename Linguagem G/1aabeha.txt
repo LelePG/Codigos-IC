@@ -1,0 +1,8 @@
+Linguagem simples que reconhece programas iniciados por
+COMEÇA AQUI $, seguido de vários *comando(), com as linhas terminadas em ';' , e o programa finalizado em /.
+Não acontece nada além do reconhecimento do programa se ele estiver bem escrito.
+
+Para executar:﻿
+javacc G.jj
+javac *.java
+java G teste.txt, sendo teste.txt a file onde está guardado o código que quero reconhecer.
