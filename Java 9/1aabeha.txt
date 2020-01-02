@@ -1,0 +1,3 @@
+Gramática do Java 9 de https://github.com/antlr/grammars-v4/tree/master/java9
+Reconhece a linguagem fazendo a inserção do package e etc.
+O arquivo exemplo.txt (que é um código em java) é para teste e a classe Leitor para fazer esses testes na gramática sem precisar ficar usando o TestRig toda hora. ﻿

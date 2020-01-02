@@ -1,0 +1,10 @@
+Tradução de somas e subtrações de números naturais para operações lógicas com números binários, usando listener.
+
+A ideia original era usar os terminais NUM, referentes a números diretamente na gramática, mas por conta da derivação acabou fazendo mais sentido colocá-los em uma outra regra que tenha sua própria regra dentro do listener, onde esse número pode ser convertido mais facilmente pra binário. 
+A classe Main atua como o TestRig, onde é criado um parseTreeWalker que tem como listener aplicado a classe Traduz.java, que extends a classe BaseListener, sobreescrevendo os itens necessários, no caso apenas os referentes a entrada em um método. Também adicionei um comentário que printa a variável de contexto da regra em questão. 
+
+Para executar:
+antlr4 TrocaOperadores.g4
+javac *.java
+java Main init
+

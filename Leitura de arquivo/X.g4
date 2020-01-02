@@ -1,0 +1,16 @@
+grammar X;
+﻿programa: (operacao | condicional | funcao)+ | EOF;
+operacao: NUM (OP NUM)*;
+condicional: IF APAR NUM RELACIONAL NUM FPAR ACHAV programa FCHAV;
+funcao: FUNC APAR FPAR ACHAV programa RET NUM FCHAV;
+WN: [ \n\t\r] ->skip;
+NUM: [0-9]+;
+OP: '+' | '-' | '/' | '*';
+IF: 'if';
+APAR :'(';
+FPAR :')';
+RELACIONAL : '<' |'>'|'<='| '>=';
+ACHAV : '{';
+FCHAV :'}';
+FUNC: 'function';
+RET: 'return';

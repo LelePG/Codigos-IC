@@ -1,0 +1,18 @@
+Array Init é um exemplo encontrado no livro ﻿"The Definitive Antlr 4 Reference", pg. 22
+Test e Translate são as classes apresentadas no decorrer do exemplo. 
+Array Init reconhece linguagens da forma {1,2,3,4}. 
+Test é a classe que pode substituir o TestRig
+Translate é usada em conjunto com a classe ShortToUnicodeString para fazer a tradução de {1,2,3} para "\u001,\u002,\u003". A tradução em si ocorre na classe ShortToUnicodeString, onde o token equivalente ao token lido é impresso. 
+
+Para executar:
+antlr4 ArrayInit.g4
+javac *.java
+grun ArrayInit init -gui (onde init é a regra inicial da gramática e -gui é o modificador que eu quero ver)
+
+Para executar com a file Test ao invés de TestRig:
+java Test
+
+Para executar o tradutor:
+java Translate
+
+

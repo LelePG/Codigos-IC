@@ -1,0 +1,8 @@
+﻿Exemplo de leitura de um arquivo.
+A linguagem X define um programa como uma operação, um condiconal ou uma função.
+Quando o arquivo é lido, mostra caso o código esteja mal escrito, e caso contrário não mostra nada. Só pra não ter que digitar tudo no testRig mesmo... A pasta org tem que estar em todos os projetos.
+
+Os comandos para a axecução são:
+antlr4 X.g4
+javac X*.java LeArquivo.java (ou *.java)
+java LeArquivo "a.txt"

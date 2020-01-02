@@ -1,0 +1,11 @@
+Tradução de somas e subtrações de números naturais para operações lógicas com números binários, usando visitor.
+
+A mesma gramática já implementada anteriormente com Listener. 
+Um visitor (TraduzVisitor) é criado extendendo a classe TrocaOperadoresBaseVisitor. Diferentemente do listener, os métodos tem um tipo de retorno, assim como a própria classe. Esse tipo é representado pot T, e quando o método é sobreescrito, a notação @Override é dispensável. Mesmo que o tipo de retorno seja Void, um retorno é exigido. Ao invés de um método para entrada e saida do nodo, como o listener apresentava,o visitor tem apenas um método referente a visitação da regra em questão. 
+
+A classe Main atua como o TestRig, onde a árvore sintática é criada, e o visitor também. Lembrando que o visitor deve ser instanciado pela classe que implementa a interface BaseVisitor. Uma vez criado, é dado o comando para que ele comece a visitar os nodos da árvore. (nomeVisitor).visit(nomeArvore). Como as informações são mostradas por meio de prints na implementação da classe visitor, acaba aqui. A implementação dos métodos em si, é a mesma dos métodos implementados no exemplo dos listener. A sintaxe dos métodos que varia.
+
+Para executar:
+antlr4 TrocaOperadores.g4 - visitor   Obs. O listener sempre será criado, embora o visitor precide do comando específico.
+javac *.java
+java Main

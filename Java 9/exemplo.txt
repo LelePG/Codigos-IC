@@ -1,0 +1,10 @@
+/*public static void main(){
+System.out.println("oi");
+}﻿*/
+package oi;
+class oi{
+public static void main (){
+int i;
+}
+}
+

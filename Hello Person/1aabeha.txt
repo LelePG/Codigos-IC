@@ -1,0 +1,1 @@
+﻿Gramática que reconhece Hello (cadeia de letras (maiúsculas ou minúsculas em qualquer ordem) ou de números começados por 0), devem ser testados usando TestRig

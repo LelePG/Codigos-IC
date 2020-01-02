@@ -1,0 +1,12 @@
+Tradução de código Morse para String usando um Listener. 
+
+A classe TListener funciona como TestRig, onde a árvore é criada e percorrida pelo walker. Enquanto o walker caminha pela árvore, é aplicado a ele a classe MorseString, que é uma subclasse da classe BaseListener. Na classe MorseString todos os métodos que me interessam são sobreescritos, no caso com um System.out.print() para a letra correspondente a regra. Todas as regras foram indexadas usando #X na gramática, o que pode ser feito para lidar com alternativas.
+Cada vez que uma regra o método correspondente a entrada naquela regra é chamado, e o mesmo quando acontece a saida da regra. 
+Muitos mais arquivos foram criados, por para cada #X surgiu uma nova classe. 
+
+Para executar:
+antlr4 Morse.g4
+javac *.java
+java TListener
+
+OBS: As letras codificadas podem ser vistar na própria gramática
