@@ -1,36 +1,49 @@
 import org.antlr.v4.runtime.ParserRuleContext;
 public class AtomicVisitor extends Java9BaseVisitor<Void>{
-    public Void visitAtomicStatement(Java9Parser.AtomicStatementContext ctx) {
-        System.out.println(ctx.getText());
-        return visitChildren(ctx);
+
+    @Override public Void visitATOMICSTATEMENT(Java9Parser.ATOMICSTATEMENTContext ctx) {
+        TransactionCode(ctx.getText());
+        return null; //não visita os nodos abaixo, já que a manipulação é feita aqui
+    }
+    //Métodos de manipulação do atomic
+    private void TransactionCode(String context){
+        System.out.println(TransactionInit());//inicia o código
+        System.out.println(TransactionTest(context.substring(7,context.length()-1)));//7 é o final de "atomic{", e o -1 exclui o fecha chaves do final
+    }
+    private String TransactionInit(){//Cria a transação
+        return "Trans t = new Trans();\n" +
+                "t.start();";
     }
 
-    @Override public Void visitTypeDeclaration(Java9Parser.TypeDeclarationContext ctx) {
-        System.out.println("AAAAAA");
-        return visitChildren(ctx); }
-
-/** public Void visitAtomicStatement(Java9Parser.AtomicStatementContext ctx) {
-        System.out.println("FOOOOO");
-
-        String testT = "/nwhile(t.state != COMMITED){";
-                testT += ctx.getText();
-        testT += testTransaction();
-        testT+="}";
-        return visitChildren(ctx);
+    private String TransactionAdd(String original){//adiciona a transação nas operações
+        int inserir,fim;//onde inserir o caracter, e o fim da substring
+        String retorno = "";//armazena o texto formatado
+        while(original.contains("(")){// enquanto houver um abre parênteses na substring testada
+            fim = original.indexOf(';') +1;//fim da linha/substring pra formatação
+            inserir = original.indexOf('(')+1; //onde inserir o t, logo depois do primeiro (
+            retorno += "\n" + original.substring(0,inserir) + "t," + original.substring(inserir,fim) ; // divide a linha, e nela insere o t. Depois disso, cria nova linha
+            original = original.substring(fim);//depois de inserir o t, aquela linha (até ';') é descartada e a string onde tenho o texto é atualizada
+        }
+        return retorno;
     }
+    private String TransactionTest(String context){//testes da transação
+        return "while (t.state != COMMITED) {" +//texto de teste das transações
+                TransactionAdd(context) +//material da transação propriamente dito
+                "\nswitch(t.state){" +
+                "\ncase RETRY: " +
+                "\n\tt.retry();"+
+                "\n\t break;" +
+                "\ncase ACTIVE: " +
+                "\n\tt.commit();"+
+                "\n\tbreak;" +
+                "\ncase ABORTED: " +
+                "\n\tt.rollback();"+
+                "\n\tbreak;" +
+                "\ndefault:"+
+                "\n\tbreak;"+
+                "}";
 
-    private String testTransaction() {
-        return "switch(t.state){" +
-                "case RETRY:" +
-                "\tt.retry();" +
-                "\tbreak;"+
-        "case ACTIVE:" +
-                "\tt.commit();" +
-                "\tbreak;"+
-        "case ABORTED:" +
-                "\tt.rollback();" +
-                "\tbreak;"+
-        "default:"+
-        "\tbreak;";
-    }*/
+    }
 }
+
+
