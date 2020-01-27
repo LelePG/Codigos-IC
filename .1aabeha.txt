@@ -1,0 +1,18 @@
+Para rodar, primeiro compilar a gramática, todos os arquivos .java e passar um dos exemplos
+do diretório dos exemplos para fazer o teste da geração de código.
+Por enquanto, o código é gerado partindo do atomic, mas ainda falta tratar o código anterior ao atomic,
+que deve ser devolvido.
+
+antlr4 Java9.g4
+javac *.java
+java Tradutor Exemplos/exemplo.java
+
+A classe Tradutor pode ser utilizada com Listener ou Visitor, comentando os trechos de código referentes.
+
+A classe AtomicListener contém só os métodos referentes a geração de código a partir do atomic, sendo que
+o resto do código ainda precisa ser impresso também.
+
+A classe AtomicVisitor está funcionando da mesma maneira e acho que seria mais promissor fazer com ela
+a questão é como trabalhar pra devolver os códigos anteriores ao atomic
+
+O listener tem métodos para entrar e sair do nodo, enquanto o visitor só passa uma vez por cada nodo
