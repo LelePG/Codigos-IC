@@ -2,7 +2,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 public class AtomicVisitor extends Java9BaseVisitor<Void>{
 
     @Override public Void visitATOMICSTATEMENT(Java9Parser.ATOMICSTATEMENTContext ctx) {
-        TransactionCode(ctx.getText());
+        //TransactionCode(ctx.getText());
+        System.out.println(ctx.toString());
         return null; //não visita os nodos abaixo, já que a manipulação é feita aqui
     }
     //Métodos de manipulação do atomic

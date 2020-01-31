@@ -9,10 +9,29 @@ java Tradutor Exemplos/exemplo.java
 
 A classe Tradutor pode ser utilizada com Listener ou Visitor, comentando os trechos de código referentes.
 
+26/01
 A classe AtomicListener contém só os métodos referentes a geração de código a partir do atomic, sendo que
 o resto do código ainda precisa ser impresso também.
-
 A classe AtomicVisitor está funcionando da mesma maneira e acho que seria mais promissor fazer com ela
 a questão é como trabalhar pra devolver os códigos anteriores ao atomic
+O listener tem métodos para entrar e sair do nodo, enquanto o visitor só passa uma vez por cada nodo.
+Até agora, a melhor implementação pra manipulação das coisas é transformar tudo que está dentro do bloco
+atômico em uma String, e ir manipulando essa String, cortando em linhas, adicionando o t, e atualizando
+pra uma nova linha depois do ';'. O principal problema é imprimir pra cima, já que o ctx.getText() imprime
+tudo pra baixo, e acaba passando por cima do atomic também.
 
-O listener tem métodos para entrar e sair do nodo, enquanto o visitor só passa uma vez por cada nodo
+30/01
+Ao invés da manipulação de strings gambiarra que estava antes, implementei no listener um método de
+visitMethodInvocation, que quando entra nele, procura pra cima na árvore se algum dos parent nodes é um atomic
+Basicamente, ao entrar no atomic, imprime o início da transação, depois disso visita os subnodos onde estão
+todas as informações, e então ao sair do atomic imprime o final do código pras transações.
+Adicionei um método de print no listener pra usar ao invés de System.out.println, porque depois se eu quiser
+redirecionar a saida fica mais fácil. Todos os métodos que são apenas texto são retorno de texto.
+De maneira geral, ficou melhor do que a gambiarra das strings, porém se eu tiver um System.out.println.. dentro
+do atomic, dá problema. Talvez fosse melhor alterar ainda mais a regra do atomic pra criar uma regra específica
+pras operações que precisam de transação, ou talvez nem faça sentido um println dentro de um atomic. Fico
+com a segunda opção.
+Não alterei o visitor, então o código manipulando strings continua lá. Vou deixar, mas faz muito mais sentido usar o listener.
+Continuo com o problema de imprimir os códigos acima do nodo em questão, e provavelmente o caminho é a
+implementação de mais alguns métodos pra trabalhar a impressão. Usar o ctx.getRuleIndex() pode ser útil,
+se eu conseguir uma maneira de usar o everyRule pra fazer a impressão...Duvido muito que funcione, mesmo assim.

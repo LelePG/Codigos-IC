@@ -10,13 +10,13 @@ public class Tradutor {
         ParseTree tree = parser.compilationUnit();//cria a árvore
 
         //VISITOR
-        AtomicVisitor visitor = new AtomicVisitor();//Cria o visitor que vai percorrer a árvore
-        visitor.visit(tree);//só manda ele visitar os nodos. O esquema todo de printf está na classe TraduzLoader
+        //AtomicVisitor visitor = new AtomicVisitor();//Cria o visitor que vai percorrer a árvore
+        //visitor.visit(tree);//só manda ele visitar os nodos. O esquema todo de printf está na classe TraduzLoader
 
         //LISTENER
-        //ParseTreeWalker walker = new ParseTreeWalker();//cria o walker da árvore
-        //AtomicListener tradutor = new AtomicListener();//cria o listener que vou aplicar na minha árvore
-        //walker.walk(tradutor,tree);//caminha pela árvore tree usando o listener tradutor.
+        ParseTreeWalker walker = new ParseTreeWalker();//cria o walker da árvore
+        AtomicListener tradutor = new AtomicListener();//cria o listener que vou aplicar na minha árvore
+        walker.walk(tradutor,tree);//caminha pela árvore tree usando o listener tradutor.
 
         System.out.println("final");
     }
