@@ -844,96 +844,11 @@ public interface Java9Visitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatementNoShortIf(Java9Parser.StatementNoShortIfContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code BLOCK}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
+	 * Visit a parse tree produced by {@link Java9Parser#statementWithoutTrailingSubstatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBLOCK(Java9Parser.BLOCKContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code EMPTYSTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEMPTYSTATEMENT(Java9Parser.EMPTYSTATEMENTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code EXPRESSIONSTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEXPRESSIONSTATEMENT(Java9Parser.EXPRESSIONSTATEMENTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ASSERTSTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitASSERTSTATEMENT(Java9Parser.ASSERTSTATEMENTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code SWITCHSTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSWITCHSTATEMENT(Java9Parser.SWITCHSTATEMENTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code DOSTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDOSTATEMENT(Java9Parser.DOSTATEMENTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code BREAKSTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBREAKSTATEMENT(Java9Parser.BREAKSTATEMENTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code CONTINUESTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCONTINUESTATEMENT(Java9Parser.CONTINUESTATEMENTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code RETURNSTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRETURNSTATEMENT(Java9Parser.RETURNSTATEMENTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code SYNCHRONIZEDSTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSYNCHRONIZEDSTATEMENT(Java9Parser.SYNCHRONIZEDSTATEMENTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code THROWSTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTHROWSTATEMENT(Java9Parser.THROWSTATEMENTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code TRYSTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTRYSTATEMENT(Java9Parser.TRYSTATEMENTContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ATOMICSTATEMENT}
-	 * labeled alternative in {@link Java9Parser#statementWithoutTrailingSubstatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitATOMICSTATEMENT(Java9Parser.ATOMICSTATEMENTContext ctx);
+	T visitStatementWithoutTrailingSubstatement(Java9Parser.StatementWithoutTrailingSubstatementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Java9Parser#emptyStatement}.
 	 * @param ctx the parse tree

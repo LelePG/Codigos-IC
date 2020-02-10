@@ -1,6 +1,6 @@
 import org.antlr.v4.runtime.ParserRuleContext;
 public class AtomicVisitor extends Java9BaseVisitor<Void>{
-
+/*
     @Override public Void visitATOMICSTATEMENT(Java9Parser.ATOMICSTATEMENTContext ctx) {
         //TransactionCode(ctx.getText());
         System.out.println(ctx.toString());
@@ -44,7 +44,7 @@ public class AtomicVisitor extends Java9BaseVisitor<Void>{
                 "\n\tbreak;"+
                 "}";
 
-    }
+    } */
 }
 
 

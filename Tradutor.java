@@ -18,6 +18,5 @@ public class Tradutor {
         AtomicListener tradutor = new AtomicListener();//cria o listener que vou aplicar na minha árvore
         walker.walk(tradutor,tree);//caminha pela árvore tree usando o listener tradutor.
 
-        System.out.println("final");
     }
 }

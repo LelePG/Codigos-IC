@@ -807,19 +807,19 @@ statementNoShortIf
 	;
 
 statementWithoutTrailingSubstatement
-	:	block #BLOCK
-	|	emptyStatement #EMPTYSTATEMENT
-	|	expressionStatement #EXPRESSIONSTATEMENT
-	|	assertStatement #ASSERTSTATEMENT
-	|	switchStatement #SWITCHSTATEMENT
-	|	doStatement #DOSTATEMENT
-	|	breakStatement #BREAKSTATEMENT
-	|	continueStatement #CONTINUESTATEMENT
-	|	returnStatement #RETURNSTATEMENT
-	|	synchronizedStatement #SYNCHRONIZEDSTATEMENT
-	|	throwStatement #THROWSTATEMENT
-	|	tryStatement #TRYSTATEMENT
-	|   atomicStatement #ATOMICSTATEMENT//insertion of atomic block
+	:	block
+	|	emptyStatement
+	|	expressionStatement
+	|	assertStatement
+	|	switchStatement
+	|	doStatement
+	|	breakStatement
+	|	continueStatement
+	|	returnStatement
+	|	synchronizedStatement
+	|	throwStatement
+	|	tryStatement
+	|   atomicStatement //insertion of atomic block
 	;
 
 emptyStatement
@@ -1824,6 +1824,7 @@ LSHIFT_ASSIGN : '<<=';
 RSHIFT_ASSIGN : '>>=';
 URSHIFT_ASSIGN : '>>>=';
 
+
 // §3.8 Identifiers (must appear after all keywords in the grammar)
 
 Identifier
@@ -1856,8 +1857,9 @@ JavaLetterOrDigit
 // Whitespace and comments
 //
 
-WS  :  [ \t\r\n\u000C]+ -> skip
+WS  :  [ \t\r\n\u000C]+ -> channel(HIDDEN) // skip
     ;
+
 
 COMMENT
     :   '/*' .*? '*/' -> channel(HIDDEN)

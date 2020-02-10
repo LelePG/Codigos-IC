@@ -35,3 +35,15 @@ Não alterei o visitor, então o código manipulando strings continua lá. Vou d
 Continuo com o problema de imprimir os códigos acima do nodo em questão, e provavelmente o caminho é a
 implementação de mais alguns métodos pra trabalhar a impressão. Usar o ctx.getRuleIndex() pode ser útil,
 se eu conseguir uma maneira de usar o everyRule pra fazer a impressão...Duvido muito que funcione, mesmo assim.
+
+10/02
+Cheguei a conclusão que a melhor maneira de implementar seja verificando se um nó é folha, e imprimir ele.
+Consegui fazer pros terminal nodes, mas os nós que são os tokens da gramática dão problema...
+A melhor forma de fazer isso, acho eu, é fazendo a implementação do enterEveryRule.
+Primeiro, preciso testar se é uma das condições proibidas, a regra do atomic ou uma regra dentro do atomic,
+Se não é nenhuma regra proibida, verifico se é um nó terminal. Se é um nó folha, imprime o que está nele.
+Funciona quando o nó não é um token da linguagem, e não encontrei um bom jeito de fazer isso...
+Se eu encontrar uma maneira mais eficiente de reconhecer as folhas, pode funcionar, o problema é que
+A variavel ctx, que é o que eu deveria poder mexer, não é do tipo ParseTree, mas o resultado de um getChild() é,
+Então pra poder comparar, preciso primeiro pegar o filho, e isso geralmente dá problema.Não faço ideia do que
+é melhor fazer nessa situação... Já pesquisei bastante sobre isso e não cheguei a conclusão nenhuma...
