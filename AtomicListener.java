@@ -1,63 +1,49 @@
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.*;
+
 import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 import org.antlr.v4.runtime.misc.Interval;
+
+import org.antlr.v4.runtime.*;
 
 
 public class AtomicListener extends Java9BaseListener {
     //Cada regra da gramática tem um índice. Posso descobrir esse índice usando ctx.getRuleIndex(), e printar
     //usando ctx.getText() só o que me interessa
-    final int ATOMICINDEX = 6;//índice da regra do atomic
-    //atomic 6
-    //statement without trailing substatement 139
-    //method invocation 204
-    //block 132
-    //int c = 0;
+    private final int ATOMICINDEX = 6;//índice da regra do atomic
+    private String generetedAtomicCode = "";
+
+    ///*
+    @Override
+    public void enterAtomicStatement(Java9Parser.AtomicStatementContext ctx) {//quando entra no atomic, printa o inicio das transações
+        getAllGeneretedAtomicCode(transactionInit());//salva o inicio da transação e depois ele visita o próximo nodo
+    }
 
     @Override
-    public void enterEveryRule(ParserRuleContext ctx) {
-        if (ctx.getRuleIndex() == ATOMICINDEX || findAtomicParent(ctx)) {
-            return;//Se eu estiver na regra do atomic, ou dentro de um escopo de atomic...
-       }
-        else if ((ctx.getChild(0) instanceof TerminalNodeImpl || ctx.getChild(0)==null)
-                && ctx.getChildCount() <= 1) {//caso contrário
-            System.out.println(ctx.getStart().getText());//Funciona para todas as folhas que são identificadores, mas não funciona pros tokens
-            /*int a = ctx.start.getStartIndex();
-            int b = ctx.stop.getStopIndex();
-            Interval interval = new Interval(a,b);
-            System.out.println(ctx.start.getInputStream().getText(interval)); */
-        }
-
-
+    public void exitAtomicStatement(Java9Parser.AtomicStatementContext ctx) {//quando sai do atomic salva o final das transações
+        getAllGeneretedAtomicCode(transactionTest());//salva o final da transação
+        Tradutor.rewriter.insertBefore(ctx.getStart(), this.generetedAtomicCode);//insere todo o texto que foi gerado até aqui
+        //antes do primeiro token da varivável de conexto dessa regra, o atomic inicial da regra.
+        Tradutor.rewriter.delete(ctx.getStart(), ctx.getStop());//deleta todos os tokens do primeiro ao último, ou seja, todo
+        // o contexto que existia dentro da regra do atomic, que é o que foi reescrito.
     }
 
-
-
-
- /*   @Override public void enterAtomicStatement(Java9Parser.AtomicStatementContext ctx) {//quando entra no atomic, printa o inicio das transações
-        printTree(transactionInit());//printa o inicio da transação e depois ele visita o próximo nodo
-    }
-
-    @Override public void exitAtomicStatement(Java9Parser.AtomicStatementContext ctx) {//quando sai do atomic printa o final das transações
-        printTree(transactionTest());//printa o final da transação
-    }
-
-    @Override public void enterMethodInvocation(Java9Parser.MethodInvocationContext ctx) {//verifica se está dentro de um atomic
-        if(findAtomicParent(ctx)){//se estiver dentro da subárvore de um atomic
-            printTree(addTransacionToMethod(ctx.getText()));//adiciona transação no método
+    @Override
+    public void enterMethodInvocation(Java9Parser.MethodInvocationContext ctx) {//verifica se está dentro de um atomic
+        if (isInsideAtomic(ctx)) {//se estiver dentro da subárvore de um atomic
+            getAllGeneretedAtomicCode(addTransacionToMethod(ctx.getText()));//adiciona transação no método
+        } else {//senão, imprime do jeito que for.
+            getAllGeneretedAtomicCode(ctx.getText() + ";");
         }
-        else{//senão, imprime do jeito que for.
-            printTree(ctx.getText()+";");
-        }
-    } */
+    }
+    //*/
 
     //  MÉTODOS
-    private void printTree(String argument){//Método para imprimir as coisas, pode ser modificado depois
-        System.out.println(argument);
+    private void getAllGeneretedAtomicCode(String argument) {//Método para guardar todo o código que deve ser impresso depois
+        this.generetedAtomicCode += argument;//concatena na variável String que criei na classe.
     }
 
-    private boolean findAtomicParent(ParserRuleContext node) {//verifica se está dentro de um atomic
+    private boolean isInsideAtomic(ParserRuleContext node) {//verifica se está dentro de um atomic
         node = node.getParent();// a regra atual é uma qualquer além do atomic, então posso começar a subir a àrvore
         while (node != null) {//se o parent node é null, é a raiz da árvore
             if (node.getRuleIndex() == ATOMICINDEX) { // 6 é o index da regra atomic
@@ -68,14 +54,14 @@ public class AtomicListener extends Java9BaseListener {
         return false;
     }
 
-    private String addTransacionToMethod (String invocation){//adiciona transição na invocação de um método
-        int inserir = invocation.indexOf('(')+1; //onde inserir o t, logo depois do primeiro "("
-        return "\n" + invocation.substring(0,inserir) + "t," + invocation.substring(inserir) +";";//manipula o trecho do texto e devolve ele
+    private String addTransacionToMethod(String invocation) {//adiciona transição na invocação de um método
+        int inserir = invocation.indexOf('(') + 1; //onde inserir o t, logo depois do primeiro "("
+        return "\n" + invocation.substring(0, inserir) + "t," + invocation.substring(inserir) + ";";//manipula o trecho do texto e devolve ele
     }
 
-    private String transactionInit(){//Inicio da transação
+    private String transactionInit() {//Inicio da transação
         return "Trans t = new Trans();\n" +
-                "t.start();\n"+
+                "t.start();\n" +
                 "while (t.state != COMMITED) {";
     }
 
@@ -92,6 +78,9 @@ public class AtomicListener extends Java9BaseListener {
                 "\n\tbreak;" +
                 "\ndefault:" +
                 "\n\tbreak;" +
-                "}";
+                "\n}" +
+                "\n}";
     }
+
+
 }

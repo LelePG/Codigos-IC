@@ -9774,6 +9774,9 @@ public class Java9Parser extends Parser {
 	}
 
 	public static class StatementWithoutTrailingSubstatementContext extends ParserRuleContext {
+		public AtomicStatementContext atomicStatement() {
+			return getRuleContext(AtomicStatementContext.class,0);
+		}
 		public BlockContext block() {
 			return getRuleContext(BlockContext.class,0);
 		}
@@ -9810,9 +9813,6 @@ public class Java9Parser extends Parser {
 		public TryStatementContext tryStatement() {
 			return getRuleContext(TryStatementContext.class,0);
 		}
-		public AtomicStatementContext atomicStatement() {
-			return getRuleContext(AtomicStatementContext.class,0);
-		}
 		public StatementWithoutTrailingSubstatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -9834,17 +9834,24 @@ public class Java9Parser extends Parser {
 			setState(1661);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case LBRACE:
+			case T__0:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(1648);
+				atomicStatement();
+				}
+				break;
+			case LBRACE:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1649);
 				block();
 				}
 				break;
 			case SEMI:
-				enterOuterAlt(_localctx, 2);
+				enterOuterAlt(_localctx, 3);
 				{
-				setState(1649);
+				setState(1650);
 				emptyStatement();
 				}
 				break;
@@ -9880,80 +9887,73 @@ public class Java9Parser extends Parser {
 			case INC:
 			case DEC:
 			case Identifier:
-				enterOuterAlt(_localctx, 3);
+				enterOuterAlt(_localctx, 4);
 				{
-				setState(1650);
+				setState(1651);
 				expressionStatement();
 				}
 				break;
 			case ASSERT:
-				enterOuterAlt(_localctx, 4);
+				enterOuterAlt(_localctx, 5);
 				{
-				setState(1651);
+				setState(1652);
 				assertStatement();
 				}
 				break;
 			case SWITCH:
-				enterOuterAlt(_localctx, 5);
+				enterOuterAlt(_localctx, 6);
 				{
-				setState(1652);
+				setState(1653);
 				switchStatement();
 				}
 				break;
 			case DO:
-				enterOuterAlt(_localctx, 6);
+				enterOuterAlt(_localctx, 7);
 				{
-				setState(1653);
+				setState(1654);
 				doStatement();
 				}
 				break;
 			case BREAK:
-				enterOuterAlt(_localctx, 7);
+				enterOuterAlt(_localctx, 8);
 				{
-				setState(1654);
+				setState(1655);
 				breakStatement();
 				}
 				break;
 			case CONTINUE:
-				enterOuterAlt(_localctx, 8);
+				enterOuterAlt(_localctx, 9);
 				{
-				setState(1655);
+				setState(1656);
 				continueStatement();
 				}
 				break;
 			case RETURN:
-				enterOuterAlt(_localctx, 9);
+				enterOuterAlt(_localctx, 10);
 				{
-				setState(1656);
+				setState(1657);
 				returnStatement();
 				}
 				break;
 			case SYNCHRONIZED:
-				enterOuterAlt(_localctx, 10);
+				enterOuterAlt(_localctx, 11);
 				{
-				setState(1657);
+				setState(1658);
 				synchronizedStatement();
 				}
 				break;
 			case THROW:
-				enterOuterAlt(_localctx, 11);
+				enterOuterAlt(_localctx, 12);
 				{
-				setState(1658);
+				setState(1659);
 				throwStatement();
 				}
 				break;
 			case TRY:
-				enterOuterAlt(_localctx, 12);
-				{
-				setState(1659);
-				tryStatement();
-				}
-				break;
-			case T__0:
 				enterOuterAlt(_localctx, 13);
 				{
 				setState(1660);
-				atomicStatement();
+				tryStatement();
 				}
 				break;
 			default:
@@ -19716,12 +19716,12 @@ public class Java9Parser extends Parser {
 		"\5\u011e\u0090\2\u066d\u0671\5\u0128\u0095\2\u066e\u0671\5\u013a\u009e"+
 		"\2\u066f\u0671\5\u0140\u00a1\2\u0670\u066b\3\2\2\2\u0670\u066c\3\2\2\2"+
 		"\u0670\u066d\3\2\2\2\u0670\u066e\3\2\2\2\u0670\u066f\3\2\2\2\u0671\u0117"+
-		"\3\2\2\2\u0672\u0680\5\u010a\u0086\2\u0673\u0680\5\u011a\u008e\2\u0674"+
-		"\u0680\5\u0120\u0091\2\u0675\u0680\5\u012a\u0096\2\u0676\u0680\5\u012c"+
-		"\u0097\2\u0677\u0680\5\u013c\u009f\2\u0678\u0680\5\u0150\u00a9\2\u0679"+
-		"\u0680\5\u0152\u00aa\2\u067a\u0680\5\u0154\u00ab\2\u067b\u0680\5\u0158"+
-		"\u00ad\2\u067c\u0680\5\u0156\u00ac\2\u067d\u0680\5\u015a\u00ae\2\u067e"+
-		"\u0680\5\16\b\2\u067f\u0672\3\2\2\2\u067f\u0673\3\2\2\2\u067f\u0674\3"+
+		"\3\2\2\2\u0672\u0680\5\16\b\2\u0673\u0680\5\u010a\u0086\2\u0674\u0680"+
+		"\5\u011a\u008e\2\u0675\u0680\5\u0120\u0091\2\u0676\u0680\5\u012a\u0096"+
+		"\2\u0677\u0680\5\u012c\u0097\2\u0678\u0680\5\u013c\u009f\2\u0679\u0680"+
+		"\5\u0150\u00a9\2\u067a\u0680\5\u0152\u00aa\2\u067b\u0680\5\u0154\u00ab"+
+		"\2\u067c\u0680\5\u0158\u00ad\2\u067d\u0680\5\u0156\u00ac\2\u067e\u0680"+
+		"\5\u015a\u00ae\2\u067f\u0672\3\2\2\2\u067f\u0673\3\2\2\2\u067f\u0674\3"+
 		"\2\2\2\u067f\u0675\3\2\2\2\u067f\u0676\3\2\2\2\u067f\u0677\3\2\2\2\u067f"+
 		"\u0678\3\2\2\2\u067f\u0679\3\2\2\2\u067f\u067a\3\2\2\2\u067f\u067b\3\2"+
 		"\2\2\u067f\u067c\3\2\2\2\u067f\u067d\3\2\2\2\u067f\u067e\3\2\2\2\u0680"+

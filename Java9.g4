@@ -807,7 +807,8 @@ statementNoShortIf
 	;
 
 statementWithoutTrailingSubstatement
-	:	block
+	:	atomicStatement //insertion of atomic block
+	|   block
 	|	emptyStatement
 	|	expressionStatement
 	|	assertStatement
@@ -819,7 +820,6 @@ statementWithoutTrailingSubstatement
 	|	synchronizedStatement
 	|	throwStatement
 	|	tryStatement
-	|   atomicStatement //insertion of atomic block
 	;
 
 emptyStatement

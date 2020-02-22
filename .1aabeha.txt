@@ -47,3 +47,41 @@ Se eu encontrar uma maneira mais eficiente de reconhecer as folhas, pode funcion
 A variavel ctx, que é o que eu deveria poder mexer, não é do tipo ParseTree, mas o resultado de um getChild() é,
 Então pra poder comparar, preciso primeiro pegar o filho, e isso geralmente dá problema.Não faço ideia do que
 é melhor fazer nessa situação... Já pesquisei bastante sobre isso e não cheguei a conclusão nenhuma...
+
+20/02
+Pra fazer a implementação da impressão total, depois de lutar muito com a questão de encontrar folhas na árvore
+e imprimí-las, o que não deu certo, por vários motivos, um deles é que um nó folha não tem filho nulo, eu simplesmente
+não entendi isso, e vários nós podem ter uma sucessão de nós com um filho, então a detecção de um nó folha não parecia
+promissora, ou até capaz de dar certo, eu não consegui mesmo...
+Depois de pesquisar bastante outras maneiras de conseguir fazer isso, fica mais fácil, ou pelo menos menos complicado,
+usar os tokens de entrada para fazer a manipulação do código.
+
+/* for(Token t : tokens.getTokens()){//Lê todos os tokens da entrada
+           if(t.getText().equals("atomic")) {//se encontrar um atomic
+                walker.walk(tradutor, tree);//percorre a árvore
+            }
+            else {
+                System.out.print(t.getText());
+            }
+        }*/
+
+Esse era o código que eu estava tentando implementar, logicamente faz sentido, pega todos os tokens de entrada, quando
+encontrar um atomic percorre a árvore, senão, imprime o token de entrada. Tudo certo, porém os tokens dentro do atomic,
+não desaparecem simplesmente, e se tiver mais de um atomic, quando a arvore for percorrida, vai aparecer também. Na real,
+não deu certo, mas o caminho é esse. Só uma lista das classes que mais usei até agora pra tentar resolver o problema:
+https://www.antlr.org/api/Java/org/antlr/v4/runtime/tree/ParseTree.html
+https://www.antlr.org/api/Java/org/antlr/v4/runtime/ParserRuleContext.html
+https://www.antlr.org/api/Java/org/antlr/v4/runtime/Token.html
+https://www.antlr.org/api/Java/org/antlr/v4/runtime/CommonTokenStream.html
+
+A resposta do problema, é usar a classe TokenStreamRewriter, que é a common token stream onde eu posso reescrever,
+se eu implementar uma variável global desse tipo na minha main, posso alterá-la dentro do listener, sem problemas...
+Pra fazer isso, ao invés do método dentro do meu listener que imprimia as coisas na tela, renomeei e criei uma
+String pra guardar o texto que é gerado pelos meus métodos modificadores. Ao invés de serem impressos, os textos
+são guardados nessa varivável, e na saída do método atomic, eu insiro toda essa String no TokenStreamRewriter e deleto
+todo o contexto de dentro do método, excluindo assim tudo que eu tinha por dentro.
+todos os exemplos rodaram bem, com exeção do exemplo Repetições, onde o if, e o while dentro do atomic não foram reconhecidos
+A classe que acabei usando https://www.antlr.org/api/Java/org/antlr/v4/runtime/TokenStreamRewriter.html.
+Não sei nem se um if dentro de um atomic é algo válido... (Vale lembrar que o esquema do t que é adicionado no sout ainda
+não resolvi). Tem vários plugins pra fazer auto identação, no intelliJ mesmo, é só usar ctlr alt l, mas não achei nenhuma
+classe que faça isso. Acho que o melhor caminho é fazer uma classe de formatação, ou dar um jeito de encontrar uma.
