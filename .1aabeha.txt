@@ -85,3 +85,20 @@ A classe que acabei usando https://www.antlr.org/api/Java/org/antlr/v4/runtime/T
 Não sei nem se um if dentro de um atomic é algo válido... (Vale lembrar que o esquema do t que é adicionado no sout ainda
 não resolvi). Tem vários plugins pra fazer auto identação, no intelliJ mesmo, é só usar ctlr alt l, mas não achei nenhuma
 classe que faça isso. Acho que o melhor caminho é fazer uma classe de formatação, ou dar um jeito de encontrar uma.
+
+
+15/03
+Aparentemente, toda a lógica que eu tinha elaborado até agora foi esforço desnecessário. Quem manda não ler a
+documentação direitinho... o código de antes foi seriamente alterado, dentro do listener.Começando com o fato
+de que astring acumuladora que eu tinha desenvolvido anteriormente foi excluida já que um novo jeito surgiu.
+A classe TokenStreamRewriter tem um método chamado REPLACE, SIM. REPLACE! Basicamente, pode trocar um token,
+ou intervalo de token, ou então intervalos numéricos por um objeto de texto qualquer. Um objeto qualquer, na
+verdade. Therefore, no método inicial, tenho só um replace que troca o primeiro token encontrado, o atomic,
+por todo o código gerado presente no método do Transaction Init. Depois disso, a árvore é percorrida. As outras
+alterações existentes acontecem só numa chamada de método, onde a transação é adiciona ao método como já era
+feito anteriormente, porém agora, eu apago o conteúdo anterior, e adiciono o novo, o que também pode ser feito
+com um replace, que facilita. Acho que vou implementar isso.É, implementei. E no final, na saida do método
+de visitação do atomic, substituo o token final do contexto que é o fecha chaves pelo final do código gerado
+das transações. O maior problema agora, é a impressão desformatada... Adicionei mais exemplos,
+um de condicionais (if), um de switch, melhorei o das repetições e um com duas expressões atomic. Esperar a
+internet voltar e comitar isso daqui logo.
