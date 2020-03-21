@@ -14,4 +14,4 @@ Após esse comando, executa-se:
 ### IMPORTANTE
 A implementação da interface não foi finalizada.
 
-O documento .1aabeha conta com algumas anotações feitas durante o desenvolvimento, porém são anotações pessoais, e podem não ter muita utilidade ou nexo para terceiros. 
+O documento .1aabeha.txt conta com algumas anotações feitas durante o desenvolvimento, porém são anotações pessoais, e podem não ter muita utilidade ou nexo para terceiros. 
